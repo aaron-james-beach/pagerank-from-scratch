@@ -1,0 +1,34 @@
+{
+  "dangling": {
+    "rank_mass_with_handling": 1.000000000000021,
+    "rank_mass_without": 0.6732351709321963,
+    "top_k": 1000,
+    "top_k_overlap": 1000
+  },
+  "damping_sweep": [
+    {
+      "damping": 0.5,
+      "iterations": 22
+    },
+    {
+      "damping": 0.65,
+      "iterations": 35
+    },
+    {
+      "damping": 0.75,
+      "iterations": 51
+    },
+    {
+      "damping": 0.85,
+      "iterations": 89
+    },
+    {
+      "damping": 0.9,
+      "iterations": 137
+    },
+    {
+      "damping": 0.95,
+      "iterations": 200
+    }
+  ]
+}
