@@ -112,9 +112,11 @@ class PageRank:
                 break
 
         if self.verbose:
-            print("Converged after {0} iterations ({1:.1f}s), "
-                  "final L1 delta {2:.2e}, total rank mass {3:.6f}".format(
-                      it + 1, time.time() - start_time, history[-1], sum(pr_values)))
+            status = "Converged after" if history[-1] < tolerance else "Did not converge in"
+            print("{0} {1} iterations ({2:.1f}s), "
+                  "final L1 delta {3:.2e}, total rank mass {4:.6f}".format(
+                      status, len(history), time.time() - start_time,
+                      history[-1], sum(pr_values)))
 
         return pr_values, history
 
@@ -130,9 +132,9 @@ def seeded_weights(n, seed_nodes):
     The random walk restarts inside the seed set instead of anywhere in the
     graph, so rank concentrates in the neighborhood around those nodes.
     """
-    weights = [0.0] * n
     if not seed_nodes:
         raise ValueError("seed_nodes must not be empty")
+    weights = [0.0] * n
     share = 1.0 / len(seed_nodes)
     for node in seed_nodes:
         weights[node] = share

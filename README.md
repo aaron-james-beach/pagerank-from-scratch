@@ -42,7 +42,9 @@ care about the values — comparing across graphs, thresholding, feeding them
 to a downstream model — it does not.
 
 Both paths are implemented. `handle_dangling=False` reproduces the naive
-behavior so the difference can be measured rather than asserted. The implementation indexes by node id, so a graph with sparse, high-numbered
+behavior so the difference can be measured rather than asserted.
+
+The implementation indexes by node id, so a graph with sparse, high-numbered
 ids allocates a rank vector larger than the node count. web-Google's ids run
 to 916,427 across 875,713 actual nodes, so roughly 40,700 slots hold no node
 and behave as dangling — harmless here, since they receive only teleport mass
@@ -74,7 +76,8 @@ at damping 0.85 stops well short of the fixed point on this graph.
 ## Correctness
 
 Checked against `networkx.pagerank` on the same graph: top-100 rankings agree
-exactly. Residual value differences come from a node-indexing choice — this
+exactly, and the largest value difference among them is 9.2e-06 (saved in
+`figures/benchmark_results.json`). Residual value differences come from a node-indexing choice — this
 implementation indexes by node id up to the maximum observed, while NetworkX
 indexes only nodes appearing in an edge, so the uniform teleport vector is
 spread over slightly different denominators.
@@ -143,7 +146,3 @@ require dividing by the sum of weights rather than the out-degree.
 Duplicate edges are counted, not deduplicated — an edge appearing twice
 carries twice the rank. On a crawl-derived graph that is usually intended;
 on other data it may not be.
-
-The implementation indexes by node id, so a graph with sparse, high-numbered
-ids allocates a rank vector larger than the node count. Remapping to a
-contiguous range would fix that at the cost of a lookup table.
